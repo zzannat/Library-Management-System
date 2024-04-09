@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Member;
 import com.service.MemberServiceImpl;
@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
 
-
+@RestController
 public class MemberController {
 	
 	private final MemberServiceImpl memberService;
@@ -67,7 +67,7 @@ public class MemberController {
 	@PutMapping("{id}")
     public Mono updateById(@PathVariable("id") final String id, @RequestBody final Member member) {
 
-          System.out.println("Updating an Member Info");
+          System.out.println("Updating a Member Info");
 
           return memberService.update(id,member);
     }
@@ -77,7 +77,7 @@ public class MemberController {
 
     public Mono delete(@PathVariable final String id) {
 
-          System.out.println("An publisher Info deleted");
+          System.out.println("A publisher Info has been deleted");
 
           return memberService.delete(id);
 
