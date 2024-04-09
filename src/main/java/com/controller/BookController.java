@@ -1,6 +1,7 @@
 package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class BookController
 	
 	
 	// Get all Books
-	
+	@CrossOrigin
 	@GetMapping("/")
     public Flux<Book> getAll() 
 	{
@@ -43,7 +44,7 @@ public class BookController
     }
 	
 	//Get by Id
-	
+	@CrossOrigin
 	@GetMapping("{id}")
     public Mono<Book> getById(@PathVariable("id") final String id) 
 	{
@@ -68,7 +69,7 @@ public class BookController
 
     }
 	
-	
+	@CrossOrigin
 	@PutMapping("{id}")
     public Mono updateById(@PathVariable("id") final String id, @RequestBody final Book book) {
 
