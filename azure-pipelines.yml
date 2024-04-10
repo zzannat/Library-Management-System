@@ -7,16 +7,66 @@ trigger:
 - main
 
 pool:
-  SelfHosted-AP
+  name: SelfHosted-AP
+  demands: maven
 
 steps:
-- task: Maven@3
+- powershell: |
+   # Write your PowerShell commands here.
+   
+   # Write-Host "Hello World"
+   
+   - task: PowerShell@2
+     displayName: 'Unset sonar.branch.name'
+     inputs:
+       targetType: 'inline'
+       script: |
+         # Check if SONARQUBE_SCANNER_PARAMS contains 'sonar.branch.name'
+         if ($env:SONARQUBE_SCANNER_PARAMS.Contains('sonar.branch.name')) {
+           # Remove 'sonar.branch.name' from SONARQUBE_SCANNER_PARAMS
+           $params = $env:SONARQUBE_SCANNER_PARAMS -replace '"sonar.branch.name":"[\w,/,-]*",?'
+           # Update the SONARQUBE_SCANNER_PARAMS environment variable
+           Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"
+         }
+   
+   
+   
+  displayName: 'PowerShell Script'
+
+- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
+  displayName: 'Prepare analysis on SonarQube'
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: 'default'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    SonarQube: SonarQube
+    scannerMode: Other
+
+- task: Maven@4
+  displayName: 'Maven pom.xml'
+  inputs:
+    goals: 'install sonar:sonar'
+
+- task: Maven@4
+  displayName: 'Maven pom.xml'
+  inputs:
+    goals: 'clean compile'
+    publishJUnitResults: false
+
+- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
+  displayName: ReportGenerator
+  inputs:
+    reports: jacoco.exec
+    targetdir: '$(build.artifactstagingdirectory)'
+    reporttypes: 'HtmlInline_AzurePipelines'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
