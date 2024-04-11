@@ -20,19 +20,13 @@ import reactor.core.publisher.Mono;
 
 @RequestMapping("/api/books")
 
-@AllArgsConstructor
+//@AllArgsConstructor
 
 
 public class BookController 
 {
-	private final BookServiceImpl bookService;
-	
 	@Autowired
-	public BookController(BookServiceImpl bookService) 
-	{
-		this.bookService = bookService;
-	}
-	
+	private BookServiceImpl bookService;
 	
 	// Get all Books
 	@CrossOrigin
