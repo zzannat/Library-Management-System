@@ -41,6 +41,7 @@ steps:
   inputs:
     goals: 'clean compile'
     publishJUnitResults: false
+    
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
   displayName: ReportGenerator
