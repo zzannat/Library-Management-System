@@ -1,0 +1,260 @@
+/* Basic styling for the table */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+
+/* Styles for the header and button */
+h1 {
+    margin-bottom: 20px;
+}
+
+.form-container-btn {
+	  text-align: left;
+}
+a {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* Table styles */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+a:hover {
+    background-color: #2e7d32;
+    color: white;
+}
+
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.container-checkout {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+.container-checkout:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+ 
+    background-color: #007BFF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #0056b3;
+}
+
+
+.center {
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+.logout-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6262;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    background-color: #ff3f3f;
+}
+
+/* New Styles for the Form and Fields */
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-input:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,.5);
+}
+
+.form-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-button:hover {
+    background-color: #0056b3;
+}
+.container-confirmation {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.confirmation-message {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.confirmation-text {
+    color: #007BFF;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Style the options */
+.custom-select option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Style the select box when focused */
+.custom-select:focus {
+    outline: none;
+    border-color: #007bff; /* Change to your preferred focus color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Change to your preferred focus box shadow */
+}
+
+.btn-edit {
+    background-color: blue;
+}
+
+.btn-delete {
+    background-color: red !important;
+}
+
+.btn-delete:hover {
+    background-color: #b71c1c !important;
+}
+
