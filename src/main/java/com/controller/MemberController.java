@@ -19,20 +19,12 @@ import reactor.core.publisher.Mono;
 
 @RequestMapping("/api/members")
 
-@AllArgsConstructor
+//@AllArgsConstructor
 
 @RestController
 public class MemberController {
-	
-	private final MemberServiceImpl memberService;
-	
 	@Autowired
-	public MemberController(MemberServiceImpl memberService) 
-	{
-		this.memberService = memberService;
-	}
-	
-
+	private MemberServiceImpl memberService;
 	
 	// Get all members
 	@GetMapping("/")
