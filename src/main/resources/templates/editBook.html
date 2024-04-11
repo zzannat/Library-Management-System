@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Edit Book</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+ <div class="container">
+        <h1>Edit Book</h1>
+
+        <!-- The form action should match your @PostMapping in the controller -->
+       <form th:action="@{/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" th:field="*{title}" id="title" />
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" th:field="*{author}" id="author" />
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" th:field="*{price}" id="price" />
+            </div>
+
+            <div class="form-group">
+                <label for="available">Available:</label>
+                <input type="number" th:field="*{available}" id="available" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Update Book" />
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

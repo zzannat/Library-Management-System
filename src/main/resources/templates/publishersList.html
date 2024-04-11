@@ -1,0 +1,46 @@
+<!-- publishers.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="center">Welcome to the Publisher List</h1>
+
+		<h1>Publisher List</h1>
+		<div class="form-container-btn">
+			<a href="/">Books</a>
+            <a href="/members">Members</a>
+			<a href="publishers/add">Add New Publisher</a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="publisher : ${publishers}">
+					<td th:text="${publisher.Name}"></td>
+					<td th:text="${publisher.streetAddress + ', ' + publisher.city + ', ' + publisher.state + ' ' + publisher.postalCode + ', ' + publisher.country}"><td>
+						<a class="btn-edit" th:href="@{/publishers/edit/{id}(id=${publisher.id})}">Edit</a>
+						<form th:action="@{/publishers/delete/{id}(id=${publisher.id})}" method="post">
+							<input type="submit" value="Delete" class="btn-delete" />
+						</form>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+
+</html>

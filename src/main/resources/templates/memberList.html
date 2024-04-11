@@ -1,0 +1,52 @@
+<!-- members.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="center">Welcome to the Members List</h1>
+
+		<h2>Members List</h2>
+		<div class="form-container-btn">
+			<a href="/">Books</a>
+            <a href="/publishers">Publishers</a>
+			<a href="/members/add">Add New Member</a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+					<th>Membership Type</th>
+					<th>Membership Date</th>
+					<th>Expiry Date</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member : ${members}">
+					<td th:text="${member.name}"></td>
+					<td th:text="${member.streetAddress + ', ' + member.city + ', ' + member.state + ' ' + member.postalCode + ', ' + member.country}"></td>
+					<td th:text="${member.membershipType}"></td>
+					<td th:text="${member.membershipDate}"></td>
+					<td th:text="${member.expiryDate}"></td>
+					<td>
+						<a class="btn-edit" th:href="@{/members/edit/{id}(id=${member.id})}">Edit</a>
+						<form th:action="@{/members/delete/{id}(id=${member.id})}" method="post">
+							<input type="submit" value="Delete" class="btn-delete" />
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+
+</html>
