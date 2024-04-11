@@ -20,18 +20,15 @@ import reactor.core.publisher.Mono;
 
 @RequestMapping("/api/publishers")
 
-@AllArgsConstructor
+//@AllArgsConstructor
 
 @RestController
 public class PublisherController 
 {
-	private final PublisherServiceImpl publisherService;
-	
 	@Autowired
-	public PublisherController(PublisherServiceImpl publisherService) 
-	{
-		this.publisherService = publisherService;
-	}
+	private  PublisherServiceImpl publisherService;
+	
+	
 	
 		// Get all publishers
 		@GetMapping("/")
