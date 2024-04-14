@@ -89,6 +89,20 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- Configure JaCoCo plugin for code coverage -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version> <!-- Use the appropriate version -->
+            <configuration>
+                <!-- Run all tests automatically -->
+                <includes>
+                    <include>**/*Test.java</include>
+                    <include>**/*Tests.java</include>
+                    <include>**/*TestCase.java</include>
+                </includes>
+            </configuration>
+        </plugin>
 		</plugins>
 	</build>
 
