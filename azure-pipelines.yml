@@ -8,47 +8,27 @@ trigger:
 
 pool:
   name: SelfHosted-AP
-  demands: maven
+  demands:
+  - maven
+  - java
 
 steps:
-- task: PowerShell@2
-  displayName: 'Unset sonar.branch.name'
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Check if SONARQUBE_SCANNER_PARAMS contains 'sonar.branch.name'
-      if ($env:SONARQUBE_SCANNER_PARAMS -match '"sonar.branch.name"') {
-        # Remove 'sonar.branch.name' from SONARQUBE_SCANNER_PARAMS
-        $params = $env:SONARQUBE_SCANNER_PARAMS -replace '"sonar.branch.name":"[\w,/,-]*",?', ''
-        # Update the SONARQUBE_SCANNER_PARAMS environment variable
-        Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"
-      }
-
-
-- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
-  displayName: 'Prepare analysis on SonarQube'
-  inputs:
-    SonarQube: SonarQube
-    scannerMode: Other
-
-- task: Maven@4
-  displayName: 'Maven pom.xml'
-  inputs:
-    goals: 'install sonar:sonar'
-
 - task: Maven@4
   displayName: 'Maven pom.xml'
   inputs:
     goals: 'clean compile'
-    publishJUnitResults: false
-    
+    codeCoverageToolOption: JaCoCo
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
-  displayName: ReportGenerator
+- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
+  displayName: 'Prepare analysis on SonarQube1'
   inputs:
-    reports: jacoco.exec
-    targetdir: '$(build.artifactstagingdirectory)'
-    reporttypes: 'HtmlInline_AzurePipelines'
+    SonarQube: SonarQube
+    scannerMode: Other
+
+- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@5
+  displayName: 'Run Code Analysis'
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
