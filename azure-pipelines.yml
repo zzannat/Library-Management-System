@@ -5,6 +5,106 @@
 
 
 
+# trigger:
+# - main
+
+# pool:
+#   name: SelfHosted-AP
+#   demands:
+#   - maven
+#   - java
+
+# stages:
+# - stage: Deliver
+#   displayName: 'Deliver Artifact'
+#   jobs:
+#   - job: Build
+#     displayName: 'Build and Release Artifact'
+#     steps:
+#     - task: Maven@4
+#       displayName: 'Maven pom.xml'
+#       inputs:
+#         goals: 'clean compile'
+#         codeCoverageToolOption: JaCoCo
+
+#     - task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
+#       displayName: 'Prepare analysis on SonarQube1'
+#       inputs:
+#         SonarQube: SonarQube
+#         scannerMode: Other
+
+#     - task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@5
+#       displayName: 'Run Code Analysis'
+#       inputs:
+#         jdkversion: 'JAVA_HOME_17_X64'
+
+#     - task: CopyFiles@2
+#       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+#       inputs:
+#         SourceFolder: '$(system.defaultworkingdirectory)'
+#         Contents: '**/*.jar'
+#         TargetFolder: '$(build.artifactstagingdirectory)'
+#       condition: succeededOrFailed()
+
+#     - task: PublishBuildArtifacts@1
+#       displayName: 'Publish Artifact: drop'
+#       inputs:
+#         PathtoPublish: '$(build.artifactstagingdirectory)'
+#       condition: succeededOrFailed()
+
+# - stage: DeployToDev
+#   displayName: 'Deploy to Development'
+#   jobs:
+#   - job: Deploy
+#     displayName: 'Deploy to Development Environment'
+#     steps:
+#     - task: DownloadBuildArtifacts@0
+#       displayName: 'Download Artifact'
+#       inputs:
+#         artifactName: 'drop'
+#         downloadPath: '$(System.ArtifactsDirectory)'
+
+#     # Add your deployment steps here for deploying to development environment
+
+# - stage: DeployToQAT
+#   displayName: 'Deploy to QA/Test'
+#   jobs:
+#   - job: Deploy
+#     displayName: 'Deploy to QA/Test Environment'
+#     steps:
+#     - task: DownloadBuildArtifacts@0
+#       displayName: 'Download Artifact'
+#       inputs:
+#         artifactName: 'drop'
+#         downloadPath: '$(System.ArtifactsDirectory)'
+
+#     # Add your deployment steps here for deploying to QA/Test environment
+
+# - stage: DeployToStaging
+#   displayName: 'Deploy to Staging'
+#   jobs:
+#   - job: Deploy
+#     displayName: 'Deploy to Staging Environment'
+#     steps:
+#     - task: DownloadBuildArtifacts@0
+#       displayName: 'Download Artifact'
+#       inputs:
+#         artifactName: 'drop'
+#         downloadPath: '$(System.ArtifactsDirectory)'
+
+#     # Add your deployment steps here for deploying to staging environment
+
+# - stage: DeployToProduction
+#   displayName: 'Deploy to Production'
+#   jobs:
+#   - job: Deploy
+#     displayName: 'Deploy to Production Environment'
+#     steps:
+#     - task: DownloadBuildArtifacts@0
+#       displayName: 'Download Artifact'
+#       inputs:
+#         artifactName: 'drop'
+#         downloadPath: '$(System.ArtifactsDirectory)'
 trigger:
 - main
 
@@ -37,6 +137,17 @@ stages:
       displayName: 'Run Code Analysis'
       inputs:
         jdkversion: 'JAVA_HOME_17_X64'
+
+    - script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true
+      displayName: 'Generate JaCoCo Code Coverage'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish JaCoCo Code Coverage'
+      inputs:
+        codeCoverageTool: 'JaCoCo'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/target/site/jacoco/jacoco.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/target/site/jacoco'
+        failIfCoverageEmpty: false
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -105,5 +216,7 @@ stages:
       inputs:
         artifactName: 'drop'
         downloadPath: '$(System.ArtifactsDirectory)'
+
+
 
    
