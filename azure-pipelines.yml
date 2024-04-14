@@ -3,46 +3,7 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-# trigger:
-# - main
 
-# pool:
-#   name: SelfHosted-AP
-#   demands:
-#   - maven
-#   - java
-
-# steps:
-# - task: Maven@4
-#   displayName: 'Maven pom.xml'
-#   inputs:
-#     goals: 'clean compile'
-#     codeCoverageToolOption: JaCoCo
-
-# - task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
-#   displayName: 'Prepare analysis on SonarQube1'
-#   inputs:
-#     SonarQube: SonarQube
-#     scannerMode: Other
-
-# - task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@5
-#   displayName: 'Run Code Analysis'
-#   inputs:
-#     jdkversion: 'JAVA_HOME_17_X64'
-
-# - task: CopyFiles@2
-#   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-#   inputs:
-#     SourceFolder: '$(system.defaultworkingdirectory)'
-#     Contents: '**/*.jar'
-#     TargetFolder: '$(build.artifactstagingdirectory)'
-#   condition: succeededOrFailed()
-
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish Artifact: drop'
-#   inputs:
-#     PathtoPublish: '$(build.artifactstagingdirectory)'
-#   condition: succeededOrFailed()
 
 trigger:
 - main
