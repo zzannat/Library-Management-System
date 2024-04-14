@@ -30,6 +30,16 @@ steps:
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
 
+- script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true
+  displayName: 'Generate JaCoCo Code Coverage'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish JaCoCo Code Coverage'
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/target/site/jacoco/jacoco.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/target/site/jacoco'
+    failIfCoverageEmpty: false
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
